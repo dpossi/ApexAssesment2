@@ -1,0 +1,7 @@
+Dear {!User.Name},
+This is a notice to let you know that the following book loan is overdue: {!Loan__c.Copy_Loan__c}.
+
+Please return the book as soon as possible.
+
+Kind Regards,
+You University Library Staff
