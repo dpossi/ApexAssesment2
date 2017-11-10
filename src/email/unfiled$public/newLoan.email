@@ -1,0 +1,7 @@
+Dear {!User.Name}
+This is just a confirmation that you have borrowed the following book: {!Loan__c.Copy_Loan__c}.
+
+You have until {!Loan__c.Return_Date__c} to return the book to the library.
+
+Kind Regards,
+You University Library Staff

@@ -1,0 +1,11 @@
+<apex:page controller="loanController">
+    <apex:form >
+        <apex:pageBlock >
+            <h1>
+    			Library Loans
+   			</h1>
+            
+            
+        </apex:pageBlock>
+	</apex:form>
+</apex:page>

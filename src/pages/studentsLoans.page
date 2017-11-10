@@ -1,0 +1,76 @@
+<apex:page controller="loanController" standardStylesheets="true">
+    <apex:stylesheet value="{!$Resource.css}"/>
+	<h1>
+    	Library Loans
+   	</h1>
+    <apex:form >
+        <apex:pageBlock id="Students" rendered="{!showStudentsSection}">
+            <apex:pageBlockSection >
+                <apex:outputLabel >Name: </apex:outputLabel>
+                <apex:inputText id="txtName" value="{!name}" />
+                <apex:commandButton value="Search" action="{!searchByName}"/>
+            </apex:pageBlockSection>
+          
+            <apex:pageBlockSection rendered="{!showStudents}">
+                <apex:pageBlockTable value="{!lstStudentsByName}" var="student">
+                    <apex:column headerValue="Action">
+                        <apex:commandLink action="{!selectStudent}" value="Select">
+                            <apex:param assignTo="{!studentId}" name="u" value="{!student.Id}"/>
+                        </apex:commandLink>
+                    </apex:column>
+                    <apex:column headerValue="Student Name">
+                        <p>{!student.FirstName}{!student.LastName}</p>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection rendered="{!showError}">
+                <apex:outputLabel value="{!errorMessage}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>   
+        
+        <apex:pageBlock id="Loans" >
+        	<apex:pageBlockSection rendered="{!showLoansSection}" >
+            	<apex:commandButton value="Return to Search" action="{!returnToSearch}"/>
+                <br/>
+            	<apex:outputLabel > {!userSelected.FirstName} {!userSelected.LastName}</apex:outputLabel>
+                    <apex:pageBlockSection rendered="{!showLoanOverdue}">
+                        <apex:image url="{!$Resource.warningImage}" styleClass="warningImage" width="35" height="35"/>
+                        Student has a book overdue
+                    </apex:pageBlockSection>
+                </apex:pageBlockSection>
+        </apex:pageBlock>
+
+        <apex:pageBlock id="loansWrapper">
+            <apex:pageBlockSection rendered="{!showLoansSection}">
+                <apex:pageBlockTable value="{!lstActiveLoans}" var="loans" columns="12">
+                    <apex:column headerValue="Action">
+                        <apex:commandLink action="{!returnLoan}" value="Return" >
+                        	<apex:param name="loanToReturn" value="{!loans.Id}" assignTo="{!loanToReturn}" />
+                        </apex:commandLink>
+	                </apex:column>
+                    <apex:column headerValue="Book Title">
+                        <p>
+                            {!loans.Copy_Loan__r.Book_Copy__r.Title__c}
+                        </p>
+                    </apex:column>
+                    <apex:column headerValue="Expected Return Date">
+                        <p>
+                            {!loans.Return_Date__c}
+                        </p>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+      
+            <apex:pageBlockSection rendered="{!showSearchCopyCode}" columns="3" >
+            	<apex:outputLabel >Book's Copy Code</apex:outputLabel>
+                <apex:inputText id="insertedCopyCode" value="{!copyCode}"/>
+                <apex:commandButton value="Lend" action="{!newLoan}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection rendered="{!showMessageSection}">
+                <apex:outputLabel value="{!notificationNessage}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+	</apex:form>
+</apex:page>
